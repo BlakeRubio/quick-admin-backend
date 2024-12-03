@@ -1,6 +1,7 @@
-import Koa from 'koa'
-/** 必须使用 COMMONJS 导入,否则会有错误 */
 const KoaRouter = require('@koa/router')
+import config from "./config";
+/** 必须使用 COMMONJS 导入,否则会有错误 */
+import Koa from 'koa'
 
 
 // 实例化 Koa
@@ -26,6 +27,6 @@ app.use((ctx) => {
 })
 
 // 开启 Koa 服务
-app.listen(3000, () => {
+app.listen(config.port, () => {
     console.log('The quick-admin-backend is running on port 3000~');
 })

@@ -12,6 +12,7 @@
   "dependencies": {
     "@koa/router": "^13.1.0",
     "@types/node": "^22.10.1",
+    "dotenv": "^16.4.6",
     "koa": "^2.15.3",
     "koa-bodyparser": "^4.4.1",
     "ts-node": "^10.9.2",
