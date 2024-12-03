@@ -1,21 +1,9 @@
-const KoaRouter = require('@koa/router')
-import config from "./config";
-/** 必须使用 COMMONJS 导入,否则会有错误 */
 import Koa from 'koa'
-
+import userRoute from "./router/user"
+import config from "./config";
 
 // 实例化 Koa
 const app = new Koa()
-
-// 路由实例测试
-const userRoute = new KoaRouter({
-    prefix: '/user'
-});
-userRoute.get('/info', (ctx) => {
-    ctx.body = {
-        userInfo: 'user info'
-    }
-})
 
 app.use(userRoute.routes())
 app.use(userRoute.allowedMethods())
@@ -28,5 +16,5 @@ app.use((ctx) => {
 
 // 开启 Koa 服务
 app.listen(config.port, () => {
-    console.log('The quick-admin-backend is running on port 3000~');
+    console.log(`The quick-admin-backend is running on port ${config.port}~`);
 })
