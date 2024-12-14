@@ -19,6 +19,13 @@ class UserService {
        const [ values ] = await connection.execute(statement, [name])
        return values
     }
+
+    // 根据用户 id 查找用户
+    async findUserById(id) {
+        const statement = 'SELECT * FROM user WHERE id = ?'
+       const [ values ] = await connection.execute(statement, [id])
+       return values
+    }
 }
 
 export default new UserService();

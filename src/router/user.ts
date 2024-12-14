@@ -14,8 +14,6 @@ const userRoute = new KoaRouter({
 userRoute.post('/', verifyUser, handlePassword, userController.create)
 
 // 获取用户信息
-userRoute.get('/info', verifyAuth, async (ctx, next) => {
-    ctx.body = '访问成功' 
-})
+userRoute.get('/info', verifyAuth, userController.getUserInfo)
 
 export default userRoute
