@@ -1,36 +1,33 @@
 import UserSchema from "../validators/user";
 import userService from "../service/user.service";
-
-interface User {
-  id: number;
-  name: string;
-  password: string;
-  createAt: Date;
-  updateAt: Date;
-}
+import md5password from "../utils/md5-password";
+import { NAME_IS_ALREADY_EXISTS } from '../constants/error'
+import { User } from '../types'
 
 // 用户注册中间件
 const verifyUser = async (ctx, next) => {
   const user = ctx.request.body;
-  const { error, value } = UserSchema.validate(user);
+  const { error } = UserSchema.validate(user);
+
   if (error) {
-    ctx.body = {
-      code: -1001,
-      message: error.details[0].message,
-    };
-    return
+    ctx.message = error.details[0].message
+    return ctx.app.emit("error", 'JOI_ERROR', ctx);
   }
 
   const hasUser = (await userService.findUserByName(user.name)) as Array<User>;
-    if (hasUser.length) {
-        ctx.body = {
-            code: -1002,
-            message: '用户名已经被占用，换一个试试吧~'
-        }
-        return
-    }
+  if (hasUser.length) {
+    return ctx.app.emit("error", NAME_IS_ALREADY_EXISTS, ctx);
+  }
 
-    await next();
+  await next();
+};
+
+// 密码加密
+export const handlePassword = async (ctx, next) => {
+  const { password } = ctx.request.body;
+  ctx.request.body.password = md5password(password);
+  
+  await next();
 };
 
 export default verifyUser;
