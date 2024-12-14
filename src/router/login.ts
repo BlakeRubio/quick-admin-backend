@@ -8,7 +8,7 @@ const loginRouter = new KoaRouter({
 })
 
 
-loginRouter.post('/', verifyLogin, LoginController.sign)
+loginRouter.post('/', verifyLogin, LoginController.generateToken)
 
 
 export default loginRouter

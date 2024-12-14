@@ -1,18 +1,18 @@
-// import jwt from "jsonwebtoken";
-const jwt = require("jsonwebtoken");
-import UserService from "../service/user.service";
+import * as jwt from 'jsonwebtoken'
+import { PRIVATE_KEY } from '../config/secret'
 
 class LoginController {
   // 返回用户信息
-  sign(ctx, next) {
+  generateToken(ctx, next) {
     // 获取用户信息
     const { id, name } = ctx.user;
+
     // 颁发令牌
-    const token = jwt.sign({ id, name }, "secret", {
-        expiresIn: 60 * 60,
-        algorithm: "RS256",
+    const token = jwt.sign({ id, name }, PRIVATE_KEY, { 
+      algorithm: 'RS256',
+      expiresIn: '1h'
     });
-    console.log('test');
+
     ctx.body = {
       code: 0,
       message: "登录成功~",
