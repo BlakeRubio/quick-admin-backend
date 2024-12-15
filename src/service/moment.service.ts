@@ -1,0 +1,13 @@
+import connection from "../app/database"
+
+class MomentService {
+    async create(content, userId) {
+        const statement = 'INSERT INTO moment (content, user_id) VALUES (?, ?)'
+        const result = await connection.execute(statement, [content, userId])
+
+        return result
+    }
+}
+
+
+export default new MomentService()
