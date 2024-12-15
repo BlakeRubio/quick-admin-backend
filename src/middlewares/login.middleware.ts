@@ -1,5 +1,6 @@
 import * as jwt from "jsonwebtoken";
-import UserSchema from "../validators/user";
+import md5password from "../utils/md5-password";
+import { UserSchema } from "../validators";
 import userService from "../service/user.service";
 import {
   UNAUTHORIZED,
@@ -8,7 +9,6 @@ import {
   PASSWORD_IS_INCORRECT,
 } from "../constants/error";
 import { User } from "../types";
-import md5password from "../utils/md5-password";
 import { PUBLIC_KEY } from "../config/secret";
 
 export const verifyLogin = async (ctx, next) => {

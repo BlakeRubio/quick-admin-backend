@@ -1,6 +1,6 @@
-import UserSchema from "../validators/user";
 import userService from "../service/user.service";
 import md5password from "../utils/md5-password";
+import { UserSchema } from "../validators";
 import { NAME_IS_ALREADY_EXISTS } from '../constants/error'
 import { User } from '../types'
 
