@@ -10,5 +10,8 @@ const momentRouter = new KoaRouter({
 
 
 momentRouter.post('/', verifyAuth, verifyContent, momentController.create)
+momentRouter.get('/', verifyAuth, momentController.list)
+momentRouter.get('/:momentId', verifyAuth, momentController.getMomentInfo)
+
 
 export default momentRouter
