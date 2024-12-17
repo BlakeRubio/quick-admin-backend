@@ -3,6 +3,7 @@ import {
     NAME_IS_ALREADY_EXISTS,
     NAME_IS_NOT_EXISTS,
     PASSWORD_IS_INCORRECT,
+    OPERATION_IS_NOT_ALLOWED,
     UNAUTHORIZED,
     FORBIDDEN
 } from "../constants/error";
@@ -28,10 +29,6 @@ app.on("error", (type, ctx) => {
       message = "你输入的密码不正确，请检查密码~";
       code = -1004;
       break;
-    case PASSWORD_IS_INCORRECT:
-      message = "你输入的密码不正确，请检查密码~";
-      code = -1004;
-      break;
     case UNAUTHORIZED:
       message = "未授权~";
       code = -401;
@@ -39,6 +36,10 @@ app.on("error", (type, ctx) => {
     case FORBIDDEN:
       message = "禁止访问~";
       code = -401;
+      break;
+    case OPERATION_IS_NOT_ALLOWED:
+      message = "操作不被允许~";
+      code = -2001;
       break;
     
   }

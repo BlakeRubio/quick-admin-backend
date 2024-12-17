@@ -46,7 +46,32 @@ class MomentController {
     // 3. 返回响应
     ctx.body = {
       code: 0,
-      data: result[0]
+      data: result[0],
+    };
+  }
+
+  async update(ctx, next) {
+    const { momentId } = ctx.params;
+
+    // 内容
+    const { content } = ctx.request.body;
+
+    await momentService.updateMomentById(content, momentId);
+
+    ctx.body = {
+      code: 0,
+      message: "修改成功`",
+    };
+  }
+
+  async remove(ctx, next) {
+    const { momentId } = ctx.params;
+
+    await momentService.removeMomentById(momentId);
+
+    ctx.body = {
+      code: 0,
+      message: "删除成功`",
     };
   }
 }
