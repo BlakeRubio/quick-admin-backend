@@ -39,4 +39,19 @@ const MomentSchema = Joi.object({
   }),
 });
 
-export { UserSchema, MomentSchema }
+
+
+// 定义标签 label 验证规则
+const labelSchema = Joi.object({
+  name: Joi.string()
+  .min(2)
+  .max(15)
+  .required()
+  .messages({
+    'string.min': '标签名必须至少包含 {{#limit}} 个字符',
+    'string.max': '标签名不能超过 {{#limit}} 个字符',
+    'string.empty': '标签名不能为空',
+    'any.required': '标签名是必填项'
+  }),
+})
+export { UserSchema, MomentSchema, labelSchema }
