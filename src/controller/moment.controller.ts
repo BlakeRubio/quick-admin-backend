@@ -74,6 +74,26 @@ class MomentController {
       message: "删除成功`",
     };
   }
+
+  async addLabels(ctx, next) {
+    const labels = ctx.labels;
+    const { momentId } = ctx.params;
+
+    // 将moment_id和label_id插入到moment_label表中
+    for (const label of labels) {
+      // 判断 label_id 和 moment_id 是否存在
+      const isExists = await momentService.hasLabel(momentId, label.id);
+      if (!isExists) {
+        // 不存在 label_id 和 moment_id 的关系
+        await momentService.addLabels(momentId, label.id);
+      }
+
+      ctx.body = {
+        code: 0,
+        message: "标签添加成功~`",
+      };
+    }
+  }
 }
 
 export default new MomentController();
