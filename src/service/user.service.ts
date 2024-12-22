@@ -26,6 +26,21 @@ class UserService {
        const [ values ] = await connection.execute(statement, [id])
        return values
     }
+
+    async getAvatarById(id) {
+        const statement = 'SELECT * FROM avatar WHERE user_id = ?'
+        const [result]: any = await connection.execute(statement, [id])
+
+        // 获取用户最后上传的头像
+        return result[result.length - 1]
+    }
+
+    async updateUserAvatarUrl(avatarUrl, id) {
+        const statement = 'UPDATE user SET avatar_url = ? WHERE id = ?'
+        const [result]: any = await connection.execute(statement, [avatarUrl, id])
+
+        return result
+    }
 }
 
 export default new UserService();

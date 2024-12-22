@@ -16,4 +16,7 @@ userRoute.post('/', verifyUser, handlePassword, userController.create)
 // 获取用户信息
 userRoute.get('/info', verifyAuth, userController.getUserInfo)
 
+// 查看头像
+userRoute.get('/avatar/:userId', userController.getAvatar)
+
 export default userRoute
