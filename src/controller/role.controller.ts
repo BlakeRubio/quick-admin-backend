@@ -1,0 +1,52 @@
+import roleService from "../service/role.service";
+
+class roleController {
+  async create(ctx, next) {
+    // 获取前端传过来的数据
+    const role = ctx.request.body;
+
+    // 将数据保存到数据库
+    const result = await roleService.create(role);
+
+    ctx.body = {
+      code: 0,
+      message: "角色创建成功~",
+      data: result,
+    };
+  }
+
+  async list(ctx, next) {
+    const result = await roleService.list();
+
+    ctx.body = {
+      code: 0,
+      message: "角色列表获取成功~",
+      data: result,
+    };
+  }
+
+  async delete(ctx, next) {
+    const { roleId } = ctx.params;
+
+    const result = await roleService.remove(roleId);
+
+    ctx.body = {
+      code: 0,
+      message: "角色删除成功~",
+      data: result,
+    };
+  }
+
+  async update(ctx, next) {
+    const { roleId } = ctx.params;
+
+    const result = await roleService.update(roleId);
+
+    ctx.body = {
+      code: 0,
+      message: "角色修改成功~",
+      data: result,
+    };
+  }
+}
+export default new roleController();
