@@ -18,5 +18,8 @@ roleRouter.patch('/:roleId', verifyAuth, roleController.update)
 // 删除角色
 roleRouter.delete('/:roleId', verifyAuth, roleController.delete)
 
+// 分配权限
+roleRouter.post('/:roleId/menu', verifyAuth, roleController.assignMenu)
+
 
 export default roleRouter
