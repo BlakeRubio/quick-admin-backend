@@ -16,7 +16,15 @@ class roleController {
   }
 
   async list(ctx, next) {
-    const result = await roleService.list();
+
+    const { page, pageSize } = ctx.query;
+    const result: any = await roleService.list(page, pageSize);
+
+    // 获取菜单信息
+    for (const role of result) {
+       const menu =  await roleService.getRoleMenus(role.id);
+       role.menus = menu
+    }
 
     ctx.body = {
       code: 0,

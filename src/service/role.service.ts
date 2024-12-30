@@ -1,4 +1,5 @@
 import connection from "../app/database";
+import menuService from "./menu.service";
 
 class roleService {
   async create(role) {
@@ -9,7 +10,7 @@ class roleService {
   }
 
   async list(page = 0, pageSize = 10) {
-    const statement = `SELECT * FROM role LIMIT ?, ?;`;
+    const statement = `SELECT * FROM role LIMIT ?, ?`;
     const [result] = await connection.execute(statement, [
         String(page),
         String(pageSize),
@@ -42,6 +43,35 @@ class roleService {
     for(const menuId of menuIds) {
       await connection.query(insertStatement, [roleId, menuId]);
     } 
+  }
+
+  async getRoleMenus(roleId) {
+    const getMenuIdsStatement = `
+    SELECT rm.roleId, JSON_ARRAYAGG(rm.menuId) menuIds 
+    FROM role_menu rm WHERE rm.roleId = ? GROUP BY rm.roleId`
+
+    const [roleMenuIds]:any = await connection.query(getMenuIdsStatement, [roleId]);
+    const menuIds = roleMenuIds.length && roleMenuIds[0].menuIds;
+
+    const wholeMenu = await menuService.wholeMenu();
+
+    function filterMenu(menu) {
+      const newMenu = []
+      for (const item of menu) {
+        if (item.children) {
+          item.children = filterMenu(item.children)
+        }
+
+        if (menuIds && menuIds.includes(item.id)) {
+          newMenu.push(item)
+        }
+      }
+      return newMenu
+    }
+
+    const finalMenu = filterMenu(wholeMenu)
+
+    return finalMenu
   }
 }
 
