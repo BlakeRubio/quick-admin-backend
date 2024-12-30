@@ -1,5 +1,7 @@
 import * as jwt from 'jsonwebtoken'
 import { PRIVATE_KEY } from '../config/secret'
+import { createResponse } from '../utils/helper';
+
 
 class LoginController {
   // 返回用户信息
@@ -13,15 +15,9 @@ class LoginController {
       expiresIn: '1h'
     });
 
-    ctx.body = {
-      code: 0,
-      message: "登录成功~",
-      data: {
-        id,
-        name,
-        token,
-      },
-    };
+    const data = { id, name, token }
+
+    ctx.body = createResponse(ctx, 0, "登录成功~", data)
   }
 }
 
