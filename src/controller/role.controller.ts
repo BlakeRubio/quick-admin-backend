@@ -48,5 +48,18 @@ class roleController {
       data: result,
     };
   }
+
+  async assignMenu(ctx, next) {
+    const { roleId } = ctx.params;
+    const menuIds = ctx.request.body.menuIds;
+    
+    // 分配权限
+    await roleService.assignMenu(roleId, menuIds);
+
+    ctx.body = {
+      code: 0,
+      message: "分配权限成功~",
+    };
+  }
 }
 export default new roleController();
