@@ -39,8 +39,6 @@ const MomentSchema = Joi.object({
   }),
 });
 
-
-
 // 定义标签 label 验证规则
 const labelSchema = Joi.object({
   name: Joi.string()
@@ -54,4 +52,45 @@ const labelSchema = Joi.object({
     'any.required': '标签名是必填项'
   }),
 })
-export { UserSchema, MomentSchema, labelSchema }
+
+// 定义 comment 验证规则
+const CommentSchema = Joi.object({
+  content: Joi.string()
+  .min(3)
+  .max(1500)
+  .required()
+  .messages({
+    'string.min': '评论内容必须至少包含 {{#limit}} 个字符',
+    'string.max': '评论内容不能超过 {{#limit}} 个字符',
+    'string.empty': '评论内容不能为空'
+  }),
+  momentId: Joi.string()
+  .required()
+  .messages({
+    'string.empty': '动态ID不能为空'
+  }),  
+});
+// 定义 reply 验证规则
+const ReplySchema = Joi.object({
+  content: Joi.string()
+  .min(3)
+  .max(1500)
+  .required()
+  .messages({
+    'string.min': '评论内容必须至少包含 {{#limit}} 个字符',
+    'string.max': '评论内容不能超过 {{#limit}} 个字符',
+    'string.empty': '评论内容不能为空'
+  }),
+  momentId: Joi.string()
+  .required()
+  .messages({
+    'string.empty': '动态ID不能为空'
+  }),  
+  commentId: Joi.string()
+  .required()
+  .messages({
+    'string.empty': '回复的评论ID不能为空'
+  }),  
+});
+
+export { UserSchema, MomentSchema, labelSchema, CommentSchema, ReplySchema }
