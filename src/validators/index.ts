@@ -22,6 +22,11 @@ const UserSchema = Joi.object({
     'any.required': '密码是必填项'
   }),
   repeat_password: Joi.ref("password"),
+  code: Joi.string()
+  .required()
+  .messages({
+    'string.empty': '验证码不能为空'
+  }), 
 });
 
 
@@ -70,6 +75,7 @@ const CommentSchema = Joi.object({
     'string.empty': '动态ID不能为空'
   }),  
 });
+
 // 定义 reply 验证规则
 const ReplySchema = Joi.object({
   content: Joi.string()
@@ -93,4 +99,10 @@ const ReplySchema = Joi.object({
   }),  
 });
 
-export { UserSchema, MomentSchema, labelSchema, CommentSchema, ReplySchema }
+export { 
+  UserSchema, 
+  MomentSchema, 
+  labelSchema, 
+  CommentSchema, 
+  ReplySchema
+}

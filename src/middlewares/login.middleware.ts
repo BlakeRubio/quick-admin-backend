@@ -7,14 +7,15 @@ import {
   NAME_IS_NOT_EXISTS,
   FORBIDDEN,
   PASSWORD_IS_INCORRECT,
+  CODE_IS_INCORRECT
 } from "../constants/error";
 import { User } from "../types";
 import { PUBLIC_KEY } from "../config/secret";
 
 export const verifyLogin = async (ctx, next) => {
   // 获取客户端传递过来的用户信息
-  const { name, password } = ctx.request.body;
-  const { error, value } = UserSchema.validate({ name, password });
+  const { name, password, code } = ctx.request.body;
+  const { error, value } = UserSchema.validate({ name, password, code });
 
   if (error) {
     ctx.message = error.details[0].message;
@@ -38,6 +39,18 @@ export const verifyLogin = async (ctx, next) => {
   ctx.user = user;
 
   await next();
+};
+
+// 验证用户输入的验证码
+export const verifyCaptcha = async (ctx, next) => {
+  const { code } = ctx.request.body;
+
+  if (code !== global.captcha) {
+    return ctx.app.emit("error", CODE_IS_INCORRECT, ctx);
+  }
+
+  await next();
+
 };
 
 // 验证 token
