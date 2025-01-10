@@ -45,7 +45,7 @@ export const verifyLogin = async (ctx, next) => {
 export const verifyCaptcha = async (ctx, next) => {
   const { code } = ctx.request.body;
 
-  if (code.toLowerCase() !== global.captcha.toLowerCase()) {
+  if (code.toLowerCase() !== global.loginCaptcha.toLowerCase()) {
     return ctx.app.emit("error", CODE_IS_INCORRECT, ctx);
   }
 

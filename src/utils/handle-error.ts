@@ -4,6 +4,8 @@ import {
     NAME_IS_NOT_EXISTS,
     PASSWORD_IS_INCORRECT,
     OPERATION_IS_NOT_ALLOWED,
+    CODE_TYPE_IS_REQUIRED,
+    CODE_IS_TYPE_INCORRECT,
     CODE_IS_INCORRECT,
     UNAUTHORIZED,
     FORBIDDEN
@@ -32,6 +34,14 @@ app.on("error", (type, ctx) => {
       break;
     case CODE_IS_INCORRECT:
       message = "你输入的验证码不正确，请检查验证码~";
+      code = -1004;
+      break;
+    case CODE_TYPE_IS_REQUIRED:
+      message = "验证码的类型不能为空，请检查类型~";
+      code = -1004;
+      break;
+    case CODE_IS_TYPE_INCORRECT:
+      message = "验证码的类型不正确，请检查类型~";
       code = -1004;
       break;
     case UNAUTHORIZED:

@@ -6,6 +6,8 @@ const UNAUTHORIZED = "unauthorized";
 const FORBIDDEN = "forbidden";
 const OPERATION_IS_NOT_ALLOWED = "operation_is_not_allowed";
 const CODE_IS_INCORRECT = "code_is_incorrect";
+const CODE_IS_TYPE_INCORRECT = "code_is_type_incorrect";
+const CODE_TYPE_IS_REQUIRED = "code_type_is_required";
 
 export {
   NAME_OR_PASSWORD_IS_REQUIRED,
@@ -13,6 +15,8 @@ export {
   NAME_IS_NOT_EXISTS,
   PASSWORD_IS_INCORRECT,
   CODE_IS_INCORRECT,
+  CODE_TYPE_IS_REQUIRED,
+  CODE_IS_TYPE_INCORRECT,
   OPERATION_IS_NOT_ALLOWED,
   UNAUTHORIZED,
   FORBIDDEN
