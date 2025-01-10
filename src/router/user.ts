@@ -2,7 +2,7 @@
 const KoaRouter = require('@koa/router')
 import userController from "../controller/user.controller";
 import verifyUser, { handlePassword } from '../middlewares/user.middleware';
-import { verifyAuth } from '../middlewares/login.middleware';
+import { verifyAuth, verifyCaptcha } from '../middlewares/login.middleware';
 
 
 // 路由实例测试
@@ -11,7 +11,7 @@ const userRoute = new KoaRouter({
 });
 
 // 用户注册接口
-userRoute.post('/', verifyUser, handlePassword, userController.create)
+userRoute.post('/', verifyUser, handlePassword, verifyCaptcha, userController.create)
 
 // 获取用户信息
 userRoute.get('/info', verifyAuth, userController.getUserInfo)

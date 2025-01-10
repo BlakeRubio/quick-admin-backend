@@ -9,6 +9,9 @@ const verifyUser = async (ctx, next) => {
   const user = ctx.request.body;
   const { error } = UserSchema.validate(user);
 
+  // 保存验证码类型
+  ctx.codeType = "register";
+
   if (error) {
     ctx.message = error.details[0].message
     return ctx.app.emit("error", 'JOI_ERROR', ctx);

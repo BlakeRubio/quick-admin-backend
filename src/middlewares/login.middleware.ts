@@ -22,6 +22,9 @@ export const verifyLogin = async (ctx, next) => {
     return ctx.app.emit("error", "JOI_ERROR", ctx);
   }
 
+  // 保存验证码类型
+  ctx.codeType = "login";
+
   // 判断用户是否存在
   const users = (await userService.findUserByName(value.name)) as Array<User>;
   const user = users[0];
@@ -44,8 +47,9 @@ export const verifyLogin = async (ctx, next) => {
 // 验证用户输入的验证码
 export const verifyCaptcha = async (ctx, next) => {
   const { code } = ctx.request.body;
+  const globalCode = ctx.codeType === "login" ? global.loginCaptcha : global.registerCaptcha;
 
-  if (code.toLowerCase() !== global.loginCaptcha.toLowerCase()) {
+  if (code.toLowerCase() !== globalCode.toLowerCase()) {
     return ctx.app.emit("error", CODE_IS_INCORRECT, ctx);
   }
 
