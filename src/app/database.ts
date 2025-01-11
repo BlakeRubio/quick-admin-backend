@@ -24,7 +24,7 @@ connectionPool.getConnection((err, connection) => {
             return;
         }
     });
-    console.log('数据库连接成功~');
+    console.log(`Database connection successful~`);
 })
 
 // 获取连接池中的连接对象
