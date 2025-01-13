@@ -20,6 +20,13 @@ class UserService {
        return values
     }
 
+    // 根据用户名查找用户
+    async findUserByPhone(name) {
+        const statement = 'SELECT * FROM user WHERE phone = ?'
+       const [ values ] = await connection.execute(statement, [name])
+       return values
+    }
+
     // 根据用户 id 查找用户
     async findUserById(id) {
         const statement = 'SELECT * FROM user WHERE id = ?'

@@ -6,7 +6,12 @@ import {
     OPERATION_IS_NOT_ALLOWED,
     CODE_TYPE_IS_REQUIRED,
     CODE_IS_TYPE_INCORRECT,
+    PHONE_IS_INCORRECT,
     CODE_IS_INCORRECT,
+    LOGIN_TYPE_IS_REQUIRED,
+    LOGIN_TYPE_IS_INCORRECT,
+    CODE_IS_REQUIRED,
+    PHONE_IS_REQUIRED,
     UNAUTHORIZED,
     FORBIDDEN
 } from "../constants/error";
@@ -40,8 +45,28 @@ app.on("error", (type, ctx) => {
       message = "验证码的类型不能为空，请检查类型~";
       code = -1004;
       break;
+    case CODE_IS_REQUIRED:
+      message = "验证码的不能为空~";
+      code = -1004;
+      break;
     case CODE_IS_TYPE_INCORRECT:
       message = "验证码的类型不正确，请检查类型~";
+      code = -1004;
+      break;
+    case PHONE_IS_REQUIRED:
+      message = "手机号的不能为空，请检查手机号";
+      code = -1004;
+      break;
+    case PHONE_IS_INCORRECT:
+      message = "手机号的格式有误，请检查手机号";
+      code = -1004;
+      break;
+    case LOGIN_TYPE_IS_REQUIRED:
+      message = "登录的类型不能为空，请检查类型~";
+      code = -1004;
+      break;
+    case LOGIN_TYPE_IS_INCORRECT:
+      message = "登录的类型不正确，请检查类型~";
       code = -1004;
       break;
     case UNAUTHORIZED:
