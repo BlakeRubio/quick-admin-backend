@@ -99,10 +99,35 @@ const ReplySchema = Joi.object({
   }),  
 });
 
+// 定义 content 验证规则
+const NoticeSchema = Joi.object({
+  content: Joi.string()
+  .min(10)
+  .max(1500)
+  .required()
+  .messages({
+    'string.min': '内容必须至少包含 {{#limit}} 个字符',
+    'string.max': '内容不能超过 {{#limit}} 个字符',
+    'string.empty': '内容不能为空',
+    'any.required': '内容是必填项'
+  }),
+  title: Joi.string()
+  .min(2)
+  .max(200)
+  .required()
+  .messages({
+    'string.min': '标题必须至少包含 {{#limit}} 个字符',
+    'string.max': '标题不能超过 {{#limit}} 个字符',
+    'string.empty': '标题不能为空',
+    'any.required': '标题是必填项'
+  }),
+});
+
 export { 
   UserSchema, 
   MomentSchema, 
   labelSchema, 
   CommentSchema, 
-  ReplySchema
+  ReplySchema,
+  NoticeSchema
 }
