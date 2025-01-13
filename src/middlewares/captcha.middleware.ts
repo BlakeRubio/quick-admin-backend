@@ -1,4 +1,5 @@
-import { CODE_TYPE_IS_REQUIRED, CODE_IS_TYPE_INCORRECT } from "../constants/error";
+import { CODE_TYPE_IS_REQUIRED, CODE_IS_TYPE_INCORRECT, PHONE_IS_REQUIRED, PHONE_IS_INCORRECT } from "../constants/error";
+import { generateRandomCode } from '../utils/helper'
 
 const svgCaptcha = require("svg-captcha");
 
@@ -29,3 +30,24 @@ export const createCaptcha = async (ctx, next) => {
   if (type === "register") global.registerCaptcha = captcha.text;
 
 };
+
+
+export const createCaptchaByPhone = async (ctx, next) => {
+  const { phone } = ctx.query;
+  if (!phone) return ctx.app.emit("error", PHONE_IS_REQUIRED, ctx);
+
+  if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(phone)) {
+    return ctx.app.emit("error", PHONE_IS_INCORRECT, ctx);
+  }
+
+  const captchaCode = generateRandomCode();
+
+  ctx.body = {
+    code: 0,
+    message: "验证码生成成功~",
+    data: captchaCode,
+  };
+
+  // 把验证码保存到全局对象里
+  global.phoneCaptcha = captchaCode;
+}
