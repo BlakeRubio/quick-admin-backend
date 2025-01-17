@@ -87,7 +87,7 @@ export const verifyCaptcha = async (ctx, next) => {
   const { code } = ctx.request.body;
   const globalCode = ctx.codeType === "login" ? global.loginCaptcha : ctx.codeType === "wxLogin" ? global.phoneCaptcha : global.registerCaptcha;
 
-  if (code.toLowerCase() !== globalCode && globalCode.toLowerCase()) {
+  if (code.toLowerCase() !== globalCode.toLowerCase()) {
     return ctx.app.emit("error", CODE_IS_INCORRECT, ctx);
   }
 
